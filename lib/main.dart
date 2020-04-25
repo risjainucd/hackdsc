@@ -5,6 +5,7 @@ import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
 import './questions.dart' as questions;
+import './map_main.dart' as mapuse;
 
 void main() => runApp(MyApp());
 
@@ -70,12 +71,29 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
           backgroundColor: Colors.red[900],
           title: const Text('HackDSC'),
           centerTitle: true,
+          bottom: new TabBar(
+            controller: controller,
+            tabs: <Widget>[
+            new Tab(icon: new Icon(Icons.question_answer)),
+            new Tab(icon: new Icon(Icons.map)
+            )
+          ]
+          ),
         ),
+        body: new TabBarView(
+          controller: controller,
+          children: <Widget>[
+            questions.Questions(),
+            mapuse.Mapuse(),
+          ],
+          ),
+        
         floatingActionButton: new FloatingActionButton(
           onPressed: null,
           backgroundColor: Colors.red,
           child: new Icon(Icons.question_answer),
           ),
+          
 
 
 
@@ -145,4 +163,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
       _isAdvertisingSubscription.cancel();
     }
   }
+}
+
+class Agora {
 }
