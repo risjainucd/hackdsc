@@ -7,7 +7,8 @@ class Mapuse extends StatelessWidget{
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.red[900],
-        title: new Text('Please Dont answer the following questions')
+        title: new Text('Please Dont answer the following questions'),
+        
       ),
     );
   }
