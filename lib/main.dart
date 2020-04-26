@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:latlong/latlong.dart';
+//import 'package:latlong/latlong.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
@@ -14,8 +14,16 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
 
+  GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
   TabController controller;
   static const UUID = '39ED98FF-2900-441A-802F-9C398FC199D2';
   static const MAJOR_ID = 1;
@@ -71,22 +79,28 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
           backgroundColor: Colors.red[900],
           title: const Text('HackDSC'),
           centerTitle: true,
-          bottom: new TabBar(
-            controller: controller,
-            tabs: <Widget>[
-            new Tab(icon: new Icon(Icons.question_answer)),
-            new Tab(icon: new Icon(Icons.map)
-            )
-          ]
+          // bottom: new TabBar(
+          //   controller: controller,
+          //   tabs: <Widget>[
+          //   new Tab(icon: new Icon(Icons.question_answer)),
+          //   new Tab(icon: new Icon(Icons.map)
+          //   )
+          // ]
+          // ),
+        ),
+        body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 11.0,
           ),
         ),
-        body: new TabBarView(
-          controller: controller,
-          children: <Widget>[
-            questions.Questions(),
-            mapuse.Mapuse(),
-          ],
-          ),
+        // body: new TabBarView(
+        //   controller: controller,
+        //   children: <Widget>[
+        //     questions.Questions(),
+        //     mapuse.MyApp(),
+        //   ],
         
         floatingActionButton: new FloatingActionButton(
           onPressed: null,
