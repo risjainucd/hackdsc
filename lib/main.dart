@@ -7,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import './login_page.dart' as auth;
 import './map_main.dart' as mapuse;
 
