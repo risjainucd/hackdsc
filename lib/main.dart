@@ -8,7 +8,7 @@ import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import './questions.dart' as questions;
+import './login_page.dart' as auth;
 import './map_main.dart' as mapuse;
 
 void main() => runApp(MyApp());
@@ -308,7 +308,7 @@ void _getLocation() async {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           
-
+      
 
 
 
@@ -368,6 +368,7 @@ void _getLocation() async {
       ),
     );
   }
+  
 
   @override
   void dispose() {
@@ -381,5 +382,14 @@ void _getLocation() async {
     if (_isAdvertisingSubscription != null) {
       _isAdvertisingSubscription.cancel();
     }
+  }
+}
+
+class AuthScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      home: auth.LoginPage(),
+    );
   }
 }
