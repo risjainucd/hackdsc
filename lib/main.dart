@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
   static const MINOR_ID = 100;
   static const TRANSMISSION_POWER = -59;
   static const IDENTIFIER = 'com.example.myDeviceRegion';
-  static const LAYOUT = BeaconBroadcast.ALTBEACON_LAYOUT;
+  static const LAYOUT = 'm:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24';
   static const MANUFACTURER_ID = 0x0118;
 
   BeaconBroadcast beaconBroadcast = BeaconBroadcast();
