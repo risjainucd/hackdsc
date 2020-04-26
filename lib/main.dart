@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 
-class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   GoogleMapController mapController;
 
@@ -47,7 +47,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
         _isTransmissionSupported = isTransmissionSupported;
       });
       WidgetsBinding.instance.addPostFrameCallback((_)=>broadcasting());
-      controller=new TabController(length: 2, vsync: this);
     });
 
     _isAdvertisingSubscription =
