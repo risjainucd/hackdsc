@@ -1,0 +1,64 @@
+PODS:
+  - beacon_broadcast (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - flutter_beacon (0.3.0):
+    - Flutter
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
+  - geolocation (0.0.1):
+    - Flutter
+    - streams_channel
+  - google_maps_flutter (0.0.1):
+    - Flutter
+    - GoogleMaps
+  - GoogleMaps (3.8.0):
+    - GoogleMaps/Maps (= 3.8.0)
+  - GoogleMaps/Base (3.8.0)
+  - GoogleMaps/Maps (3.8.0):
+    - GoogleMaps/Base
+  - streams_channel (0.2.1):
+    - Flutter
+
+DEPENDENCIES:
+  - beacon_broadcast (from `.symlinks/plugins/beacon_broadcast/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_beacon (from `.symlinks/plugins/flutter_beacon/ios`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
+  - geolocation (from `.symlinks/plugins/geolocation/ios`)
+  - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
+  - streams_channel (from `.symlinks/plugins/streams_channel/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - GoogleMaps
+
+EXTERNAL SOURCES:
+  beacon_broadcast:
+    :path: ".symlinks/plugins/beacon_broadcast/ios"
+  Flutter:
+    :path: Flutter
+  flutter_beacon:
+    :path: ".symlinks/plugins/flutter_beacon/ios"
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
+  geolocation:
+    :path: ".symlinks/plugins/geolocation/ios"
+  google_maps_flutter:
+    :path: ".symlinks/plugins/google_maps_flutter/ios"
+  streams_channel:
+    :path: ".symlinks/plugins/streams_channel/ios"
+
+SPEC CHECKSUMS:
+  beacon_broadcast: 2c2562111f7b7e0f1ab59487f6bc805805e3c9f3
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_beacon: 2525df9d96b904623f325968a73bac805e648119
+  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
+  geolocation: c194aabfd0f48cd7d6041afa8ba6542aa5714dc2
+  google_maps_flutter: df4e7de95264aa0a2f11aac0fc7e313acb8ffc7e
+  GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
+  streams_channel: 733858967fb8b62e0d63a1d03f6b8f0cb7d3bfc2
+
+PODFILE CHECKSUM: e45c292f618eeca3034958d33b444b6e1249b55f
+
+COCOAPODS: 1.7.5
