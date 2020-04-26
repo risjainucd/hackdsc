@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 //import 'package:latlong/latlong.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
@@ -199,6 +201,69 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           //   )
           // ]
           // ),
+          actions: <Widget>[
+            if (!authorizationStatusOk)
+              IconButton(
+                  icon: Icon(Icons.portable_wifi_off),
+                  color: Colors.red,
+                  onPressed: () async {
+                    await flutterBeacon.requestAuthorization;
+                  }),
+            if (!locationServiceEnabled)
+              IconButton(
+                  icon: Icon(Icons.location_off),
+                  color: Colors.red,
+                  onPressed: () async {
+                    if (Platform.isAndroid) {
+                      await flutterBeacon.openLocationSettings;
+                    } else if (Platform.isIOS) {
+
+                    }
+                  }),
+            StreamBuilder<BluetoothState>(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final state = snapshot.data;
+
+                  if (state == BluetoothState.stateOn) {
+                    return IconButton(
+                      icon: Icon(Icons.bluetooth_connected),
+                      onPressed: () {},
+                      color: Colors.lightBlueAccent,
+                    );
+                  }
+
+                  if (state == BluetoothState.stateOff) {
+                    return IconButton(
+                      icon: Icon(Icons.bluetooth),
+                      onPressed: () async {
+                        if (Platform.isAndroid) {
+                          try {
+                            await flutterBeacon.openBluetoothSettings;
+                          } on PlatformException catch (e) {
+                            print(e);
+                          }
+                        } else if (Platform.isIOS) {
+
+                        }
+                      },
+                      color: Colors.red,
+                    );
+                  }
+
+                  return IconButton(
+                    icon: Icon(Icons.bluetooth_disabled),
+                    onPressed: () {},
+                    color: Colors.grey,
+                  );
+                }
+
+                return SizedBox.shrink();
+              },
+              stream: streamController.stream,
+              initialData: BluetoothState.stateUnknown,
+            ),
+          ],
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
@@ -294,7 +359,4 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       _isAdvertisingSubscription.cancel();
     }
   }
-}
-
-class Agora {
 }
