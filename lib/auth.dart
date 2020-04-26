@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hackdsc/Assets/database.dart'
+//import 'package:hackdsc/Assets/database.dart';
+import './database.dart';
 
 abstract class BaseAuth {
 
@@ -22,7 +23,7 @@ class Auth implements BaseAuth {
   Future<String> createUser(String email, String password) async {
     FirebaseUser user = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)) as FirebaseUser;
 
-    await DatabaseService(uid: user.uid).updateUserData(email, password)
+    await DatabaseService(uid: user.uid).updateUserData(email, password);
     return user.uid;
   }
 

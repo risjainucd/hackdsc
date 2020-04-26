@@ -87,7 +87,7 @@ class MyMapSampleState extends State<MyMap> {
     
   }
 }
-class SecondScreen extends State<MyMap> {
+class SecondScreen extends StatelessWidget {
   bool enabledFever=false;
   bool enabledCough=false;
   bool enabledTired=false;
@@ -110,9 +110,7 @@ class SecondScreen extends State<MyMap> {
               ),
               new Switch(
                 onChanged: (bool val){
-                  setState(() {
-                    enabledFever=val;
-                  });
+                  enabledFever=val;
                 },
                 activeColor: Colors.green,
                 activeTrackColor: Colors.greenAccent[400],
@@ -121,9 +119,7 @@ class SecondScreen extends State<MyMap> {
               new Text('Do you have dry cough?'),
               new Switch(
                 onChanged: (bool val){
-                  setState(() {
-                    enabledCough=val;
-                  });
+                  enabledCough=val;
                 },
                 activeColor: Colors.green,
                 activeTrackColor: Colors.greenAccent[400],
@@ -132,9 +128,7 @@ class SecondScreen extends State<MyMap> {
               new Text('Do you feel tired?'),
               new Switch(
                 onChanged: (bool val){
-                  setState(() {
-                    enabledTired=val;
-                  });
+                  enabledTired=val;
                 },
                 activeColor: Colors.green,
                 activeTrackColor: Colors.greenAccent[400],
@@ -143,9 +137,7 @@ class SecondScreen extends State<MyMap> {
               new Text('Have you been tested for COVID-19?'),
               new Switch(
                 onChanged: (bool val){
-                  setState(() {
-                    enabledCorona=val;
-                  });
+                  enabledCorona=val;
                 },
                 activeColor: Colors.green,
                 activeTrackColor: Colors.greenAccent[400],
