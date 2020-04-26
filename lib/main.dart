@@ -17,6 +17,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
+// For beacon reading
+  final StreamController<BluetoothState> streamController = StreamController();
+  StreamSubscription<BluetoothState> _streamBluetooth;
+  StreamSubscription<RangingResult> _streamRanging;
+  final _regionBeacons = <Region, List<Beacon>>{};
+  final _beacons = <Beacon>[];
+  bool authorizationStatusOk = false;
+  bool locationServiceEnabled = false;
+  bool bluetoothEnabled = false;
+
+// For google maps
   GoogleMapController mapController;
 
   final LatLng _center = const LatLng(45.521563, -122.677433);
@@ -39,15 +50,117 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool _isAdvertising = false;
   StreamSubscription<bool> _isAdvertisingSubscription;
 
+ checkAllRequirements() async {
+    final bluetoothState = await flutterBeacon.bluetoothState;
+    final bluetoothEnabled = bluetoothState == BluetoothState.stateOn;
+    final authorizationStatus = await flutterBeacon.authorizationStatus;
+    final authorizationStatusOk =
+        authorizationStatus == AuthorizationStatus.allowed ||
+            authorizationStatus == AuthorizationStatus.always;
+    final locationServiceEnabled =
+        await flutterBeacon.checkLocationServicesIfEnabled;
+
+    setState(() {
+      this.authorizationStatusOk = authorizationStatusOk;
+      this.locationServiceEnabled = locationServiceEnabled;
+      this.bluetoothEnabled = bluetoothEnabled;
+    });
+  }
+   pauseScanBeacon() async {
+    _streamRanging?.pause();
+    if (_beacons.isNotEmpty) {
+      setState(() {
+        _beacons.clear();
+      });
+    }
+  }
+  
+  int _compareParameters(Beacon a, Beacon b) {
+    int compare = a.proximityUUID.compareTo(b.proximityUUID);
+
+    if (compare == 0) {
+      compare = a.major.compareTo(b.major);
+    }
+
+    if (compare == 0) {
+      compare = a.minor.compareTo(b.minor);
+    }
+
+    return compare;
+  }
+  initScanBeacon() async {
+    await flutterBeacon.initializeScanning;
+    await checkAllRequirements();
+    if (!authorizationStatusOk ||
+        !locationServiceEnabled ||
+        !bluetoothEnabled) {
+      print('RETURNED, authorizationStatusOk=$authorizationStatusOk, '
+          'locationServiceEnabled=$locationServiceEnabled, '
+          'bluetoothEnabled=$bluetoothEnabled');
+      return;
+    }
+    final regions = <Region>[
+      Region(
+        identifier: 'Cubeacon',
+        proximityUUID: 'CB10023F-A318-3394-4199-A8730C7C1AEC',
+      ),
+    ];
+
+    if (_streamRanging != null) {
+      if (_streamRanging.isPaused) {
+        _streamRanging.resume();
+        return;
+      }
+    }
+
+    _streamRanging =
+        flutterBeacon.ranging(regions).listen((RangingResult result) {
+      print(result);
+      if (result != null && mounted) {
+        setState(() {
+          _regionBeacons[result.region] = result.beacons;
+          _beacons.clear();
+          _regionBeacons.values.forEach((list) {
+            _beacons.addAll(list);
+          });
+          _beacons.sort(_compareParameters);
+        });
+      }
+    });
+  }
+
+  listeningState() async {
+    print('Listening to bluetooth state');
+    _streamBluetooth = flutterBeacon
+        .bluetoothStateChanged()
+        .listen((BluetoothState state) async {
+      print('BluetoothState = $state');
+      streamController.add(state);
+
+      switch (state) {
+        case BluetoothState.stateOn:
+          initScanBeacon();
+          break;
+        case BluetoothState.stateOff:
+          await pauseScanBeacon();
+          await checkAllRequirements();
+          break;
+      }
+    });
+  }
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     beaconBroadcast.checkTransmissionSupported().then((isTransmissionSupported) {
       setState(() {
         _isTransmissionSupported = isTransmissionSupported;
       });
       WidgetsBinding.instance.addPostFrameCallback((_)=>broadcasting());
+      listeningState();
     });
+
+    
 
     _isAdvertisingSubscription =
         beaconBroadcast.getAdvertisingStateChange().listen((isAdvertising) {
@@ -171,6 +284,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    streamController?.close();
+    _streamRanging?.cancel();
+    _streamBluetooth?.cancel();
+    flutterBeacon.close;
     controller.dispose();
     if (_isAdvertisingSubscription != null) {
       _isAdvertisingSubscription.cancel();
