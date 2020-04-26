@@ -225,14 +225,14 @@ void _getLocation() async {
             if (!authorizationStatusOk)
               IconButton(
                   icon: Icon(Icons.portable_wifi_off),
-                  color: Colors.red,
+                  color: Colors.white,
                   onPressed: () async {
                     await flutterBeacon.requestAuthorization;
                   }),
             if (!locationServiceEnabled)
               IconButton(
                   icon: Icon(Icons.location_off),
-                  color: Colors.red,
+                  color: Colors.white,
                   onPressed: () async {
                     if (Platform.isAndroid) {
                       await flutterBeacon.openLocationSettings;
@@ -267,7 +267,7 @@ void _getLocation() async {
 
                         }
                       },
-                      color: Colors.red,
+                      color: Colors.white,
                     );
                   }
 
