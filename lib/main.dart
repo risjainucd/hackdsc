@@ -285,14 +285,16 @@ void _getLocation() async {
             ),
           ],
         ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(38.5449, -121.7405),
-            zoom: 11.0,
-          ),
-           markers: _markers.values.toSet(),
-        ),
+
+        body: AuthScreen(),
+        // body: GoogleMap(
+        //   onMapCreated: _onMapCreated,
+        //   initialCameraPosition: CameraPosition(
+        //     target: LatLng(38.5449, -121.7405),
+        //     zoom: 11.0,
+        //   ),
+        //    markers: _markers.values.toSet(),
+        // ),
         // body: new TabBarView(
         //   controller: controller,
         //   children: <Widget>[
@@ -300,13 +302,13 @@ void _getLocation() async {
         //     mapuse.MyApp(),
         //   ],
         
-        floatingActionButton: FloatingActionButton(
-        onPressed: _getLocation,
-        tooltip: 'Get Location',
-        child: Icon(Icons.location_searching),
+        // floatingActionButton: FloatingActionButton(
+        // onPressed: _getLocation,
+        // tooltip: 'Get Location',
+        // child: Icon(Icons.location_searching),
 
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           
       
 
@@ -365,8 +367,7 @@ void _getLocation() async {
         //     ),
         //   ),
         // ),
-      ),
-    );
+      );
   }
   
 
@@ -389,6 +390,10 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      title: 'Login',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: new RootPage(auth: new Auth()),
     );
   }
