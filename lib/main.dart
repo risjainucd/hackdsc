@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:io';
 //import 'package:latlong/latlong.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import './questions.dart' as questions;
 import './map_main.dart' as mapuse;
 
@@ -31,7 +33,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
 // For google maps
   GoogleMapController mapController;
-
+  final Map<String, Marker> _markers = {};
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
   void _onMapCreated(GoogleMapController controller) {
@@ -90,6 +92,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     return compare;
   }
+
   initScanBeacon() async {
     await flutterBeacon.initializeScanning;
     await checkAllRequirements();
@@ -183,7 +186,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       .setManufacturerId(MANUFACTURER_ID)
       .start();
 }
+void _getLocation() async {
+    var currentLocation = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 
+    setState(() {
+      _markers.clear();
+      final marker = Marker(
+          markerId: MarkerId("curr_loc"),
+          position: LatLng(currentLocation.latitude, currentLocation.longitude),
+          infoWindow: InfoWindow(title: 'Your Location'),
+      );
+      _markers["Current Location"] = marker;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -268,9 +284,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
-            target: _center,
+            target: LatLng(40.688841, -74.044015),
             zoom: 11.0,
           ),
+           markers: _markers.values.toSet(),
         ),
         // body: new TabBarView(
         //   controller: controller,
@@ -279,11 +296,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         //     mapuse.MyApp(),
         //   ],
         
-        floatingActionButton: new FloatingActionButton(
-          onPressed: null,
-          backgroundColor: Colors.red,
-          child: new Icon(Icons.question_answer),
-          ),
+        floatingActionButton: FloatingActionButton(
+        onPressed: _getLocation,
+        tooltip: 'Get Location',
+        child: Icon(Icons.location_searching),
+        ),
           
 
 

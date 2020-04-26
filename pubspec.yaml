@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   latlong:
-  geolocation:
+  geolocator:
   google_maps_flutter:
   flutter_beacon:
   beacon_broadcast:

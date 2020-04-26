@@ -57,5 +57,7 @@
   <!-- for iOS 13 + -->
   <key>NSBluetoothAlwaysUsageDescription</key>
   <string>Reason why app needs bluetooth</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+<string>To access your current location.</string>
 </dict>
 </plist>
