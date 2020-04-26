@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import './login_page.dart';
 import './auth.dart';
 import './root_page.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() => runApp(MyApp());
 
@@ -385,6 +386,13 @@ void _getLocation() async {
     }
   }
 }
+datentry(uid) {
+    _firebaseRef.push().set({
+        "UID": uid,
+        "timestamp": DateTime.now().millisecondsSinceEpoch
+    });
+}
+var _firebaseRef = FirebaseDatabase().instance.reference();
 
 class AuthScreen extends StatelessWidget {
   @override
