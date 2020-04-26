@@ -71,7 +71,7 @@ class MyMapSampleState extends State<MyMap> {
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: CameraPosition(
-          target: LatLng(40.688841, -74.044015),
+          target: LatLng(38.5449, -121.74055),
           zoom: 11,
         ),
       ),
