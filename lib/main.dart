@@ -7,8 +7,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_beacon/flutter_beacon.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
-import './login_page.dart' as auth;
-import './map_main.dart' as mapuse;
+import './login_page.dart';
+import './auth.dart';
+import './root_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -388,7 +389,7 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: auth.LoginPage(),
+      home: LoginPage(),
     );
   }
 }
