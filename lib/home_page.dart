@@ -69,11 +69,11 @@ class MyMapSampleState extends State<MyMap> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
-        mapType: MapType.hybrid,
         initialCameraPosition: CameraPosition(
           target: LatLng(38.5449, -121.74055),
           zoom: 11,
         ),
+        markers: _markers.values.toSet(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _getLocation,
