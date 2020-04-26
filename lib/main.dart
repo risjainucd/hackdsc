@@ -30,7 +30,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool authorizationStatusOk = false;
   bool locationServiceEnabled = false;
   bool bluetoothEnabled = false;
-
+  var startpos;
+  var startpos2;
 // For google maps
   GoogleMapController mapController;
   final Map<String, Marker> _markers = {};
@@ -192,6 +193,8 @@ void _getLocation() async {
 
     setState(() {
       _markers.clear();
+      startpos=currentLocation.latitude;
+      startpos2=currentLocation.longitude;
       final marker = Marker(
           markerId: MarkerId("curr_loc"),
           position: LatLng(currentLocation.latitude, currentLocation.longitude),
@@ -284,7 +287,7 @@ void _getLocation() async {
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
-            target: LatLng(40.688841, -74.044015),
+            target: LatLng(startpos, startpos2),
             zoom: 11.0,
           ),
            markers: _markers.values.toSet(),
